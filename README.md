@@ -7,7 +7,13 @@ A Hermes Agent skill for first-pass triage of pre-seed and seed startup pitches.
 ## Install
 
 ```bash
-hermes skills install marketstructure/vc-seed-screen
+hermes skills install marketstructure/vc-seed-screen/vc-seed-screen
+```
+
+Or install directly from this repo's SKILL.md:
+
+```bash
+hermes skills install https://raw.githubusercontent.com/marketstructure/vc-seed-screen/main/SKILL.md
 ```
 
 Or from a local clone:
