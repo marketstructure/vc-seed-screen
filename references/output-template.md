@@ -19,6 +19,10 @@ never see is the machinery of how the analysis was organised.
 - Internal tiering language: "evidence grade E3", "conviction cap", "band", "tail flag"
 - Decimal precision that implies false confidence — `6.0 / 10` is fine, `51.33 / 100` is not
 - Confidence percentages
+- **Absolute negative phrasing** — "appears nowhere", "has no funding", "no client has ever
+  appeared", "nothing exists". Negative findings are scoped: "not found in the sources reached",
+  with the unreachable source classes named in the limitations section. A search that did not
+  query Chinese registry platforms has not established that no Chinese round exists.
 
 ### Required in the memo
 
@@ -80,6 +84,7 @@ companies score 5–6.*
 ## What they have
 ## Recent news and public signals
 ## The evidence base
+## Search scope and limitations
 ## How unique is it?
 ## The competitive picture
 ## Valuation context
@@ -99,9 +104,19 @@ say what evidence would settle each one; that is analysis, not a task assignment
 The sections below the scorecard are prose. No scores, no tables except competitor comparisons and the
 verification list.
 
+**`Search scope and limitations`** is a required section in every memo. Two or three sentences: the
+source classes that were queried, and — more important — those that were NOT reachable (Chinese
+registry platforms such as Tianyancha/Qichacha, paywalled academic indexes, language barriers,
+non-English databases). State plainly that absence of evidence in this screen means not-found, not
+does-not-exist, and name which open questions only company-supplied documents can settle. This section
+is what keeps a negative finding honest; omitting it converts a limitation into an overclaim.
+
 **`Recent news and public signals`** carries what was found outside the company's own site: dated
 announcements, competitions and awards, reported funding figures, academic output, and any negative
 signals. It must also name the **conspicuous gaps** — the announcements that should exist and do not.
+Gaps are written as questions the record raises, not as verdicts: "no customer announcement found in
+the sources reached" — the reach limitation lives in the limitations section, not as a hedge on
+every sentence.
 
 On figures that differ from the company's own claim: distinguish a **genuine contradiction** (same period,
 same metric) from a figure that is merely **older** or **defined differently**. A temporal gap is not an
