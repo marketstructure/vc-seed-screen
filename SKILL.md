@@ -42,7 +42,9 @@ Provide the company name or URL and any available materials (deck, description, 
 runs five steps:
 
 1. **Grade the evidence** (E1–E4) — determines which dimensions can be scored
-2. **News review** — `web_search` for company, product, and each founder
+2. **News review** — `web_search` for company, product, and each founder. Log the scope: the queries
+   run, the languages used, and the source classes that could NOT be reached (e.g. registry-backed
+   databases, paywalled academic indexes). This log feeds the memo's limitations section verbatim.
 3. **Parallel IC panel** — `delegate_task` with six scoring agents + two context agents
 4. **Red team** — adversarial pass over the combined output
 5. **IC chair** — deterministic score via `scripts/score.py`, then recommendation
@@ -166,6 +168,11 @@ no internal tiering language, no confidence percentages.
 2. **No invented numbers.** Never estimate traction, ARR, TAM, growth, or market share that was not
    provided. Absent data is "not assessable" — excluded from the total, never filled with a guess.
 3. **Pass reasons are coded.** Every pass carries one code so patterns are visible at volume.
+4. **Absence is scoped, never absolute.** "Not found in the sources reached" is a finding; "appears
+   nowhere", "has no funding" and "no client has ever appeared" are overclaims unless every plausible
+   source class was queried. Before asserting any negative, name what was searched and what was not
+   reachable — and where a class of source could not be queried (registry platforms, academic
+   indexes, non-English databases), the memo says so in a limitations section.
 
 ## Pass reason codes
 
@@ -190,6 +197,11 @@ no internal tiering language, no confidence percentages.
   `[yfinance]`, `[web]`, `[inferred]`. Anything tagged `[inferred]` is a hypothesis, not a finding.
 - If all sources are unavailable, `comps-scout` reports `COMPS UNAVAILABLE` and the memo says plainly
   that valuation context is missing. Never fabricate a comparable or a multiple.
+- **Scope every negative claim to the search actually performed.** Write "not found in the sources
+  reached", never "appears nowhere" or "has no X". Before asserting an absence, ask: could this
+  exist under a name I did not search (personal/lab/co-author names, Chinese characters, registry
+  platforms like Tianyancha/Qichacha that general search cannot query)? If yes, the memo must say
+  so and name what would settle it. Absence of evidence is not-found, not does-not-exist.
 
 ## Output discipline
 
@@ -198,7 +210,11 @@ no internal tiering language, no confidence percentages.
 - Print the scale legend next to the scorecard.
 - Every score needs a one-line reason specific enough to argue with.
 - Numbers: no currency symbols; state the currency separately where it matters; one decimal on multiples.
-- Write in a formed view, not a hedge. "The moat is thin" beats "the moat may face challenges."
+- Write in a formed view, not a hedge. "The moat is thin" beats "The moat may face challenges."
+- But a formed view is a view of what was SEEN. Unseen territory is stated as unseen — "not found in
+  the sources reached" — never folded silently into the seen. A confident sentence about what the
+  search found and a silent assumption about what it did not are different things; the memo keeps
+  them different.
 - Name competitors. A landscape section without named companies is not a landscape section.
 - Bold sparingly: the recommendation, the total, and the few numbers that drive it.
 
@@ -225,6 +241,13 @@ All reference files are loaded by the skill and must be present:
 
 ## Pitfalls
 
+- **Subagent provider blocks (HTTP 451) on final synthesis.** A context agent (comps-scout, landscape-analyst) can complete all research and still fail when the LLM provider rejects the write-up. Do not re-dispatch on a 451 — it often recurs. Read the failed task's live transcript (path is in the dispatch result); the searches and tool results are intact there, and the orchestrator can synthesize the agent's findings itself.
+- **Fetch site text with curl when `web_extract` reports it is search-only.** Some configured backends cannot extract URLs; `curl -sL -A "Mozilla/5.0" <url>` piped through a python strip-tags one-liner gets the body text and meta descriptions directly and is the reliable fallback for company sites.
+- **Disambiguate same-name companies before scoring.** Chinese company names transliterate into identical pinyin/English forms, and search results will mix unrelated funded companies into the evidence. Anchor every screen on the legal entity from the site footer/ICP filing, search the exact Chinese characters, and list excluded namesakes in the evidence pack so agents do not credit another company's funding or traction.
+- **Build an evidence pack file per screen.** Write sourced facts + rubric anchors to one plain-text file (e.g. scratch/vc-seed-screen-<company>/evidence_pack.txt) and pass its path in every agent's context instead of pasting facts into each goal — one write, all agents read the same pack.
+- **score.py takes 'u' for unassessable dimensions** (e.g. --plan u) and renormalizes weights; the memo then reports 'Scored on N of 100 weight points.' Do not fabricate a 0 for missing data to fit the CLI.
+- **When the deterministic verdict and the investment case diverge** (e.g. 70 'Strong' but fund-returner 1/3 and demand partly captive), apply the ic-chair override in prose and say so in the memo — do not silently restate the mechanical total as the recommendation.
+- **Compose the panel around the company type.** There is no listed pure-play for most seed categories; instruct comps-scout on the closest adjacents (e.g. consumer hardware+subscription → SONO, PTON) rather than letting it guess.
 - **Scoring the stage, not the company.** A pre-seed company has no revenue; a seed-stage medical
   device company has no clearance. Score whether the founder understands the pathway, not whether it
   is complete. An unstarted but correctly understood pathway is a 5–6, not a 2.
@@ -237,6 +260,14 @@ All reference files are loaded by the skill and must be present:
   "does not reconcile."
 - **Defaulting to the middle.** Mixed signals with a real fund-returning path is a call. Mixed signals
   with a capped market is a pass. "Interesting but we need more information" is a deferral.
+- **Assign the fund-returner rating before running score.py.** The chair derives it from the
+  market/product/demand evidence (capped vertical ~1, real venture path ~2-3); `--tail` is a required
+  argument, so it cannot be left to the tool.
+- **Deliverables and copy-paste variants.** Save memos under
+  /Users/Shared/Hermes Shared/Projects/VC Seed Screens/. When the user wants to paste into LinkedIn,
+  also produce a plain-text variant — no markdown syntax: scorecard as "Dimension (weight): score"
+  lines with a prose Why under each, ALL-CAPS headers, currency as "EUR/USD" words — because
+  markdown asterisks and pipes render as literal characters there.
 
 ## Verification
 
