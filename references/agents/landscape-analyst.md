@@ -80,7 +80,11 @@ For any "first" or "unique" in the pitch, answer one of three ways:
 
 - **Confirmed** — cite the register or the competitor
 - **Regional** — first in a named jurisdiction, not first overall. This is the most common honest answer
-- **Unsupported** — the claim does not survive the search
+- **Unsupported** — the claim does not survive the search. Write it as "unsupported by the searches
+  performed", never "the claim is false": name the queries and languages tried, and flag source
+  classes that could not be reached (academic indexes, registry databases). A paper the search
+  cannot attribute is unverified, not disproven — author names are ambiguous, pre-2023 work sits
+  under personal or lab affiliations the search cannot connect, and Chinese venues index poorly.
 
 Then state what the claim is worth. "First in Canada" is a real asset if Canada is the market. It is
 worthless if the buyer is a global pharma.
