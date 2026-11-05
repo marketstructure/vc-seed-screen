@@ -86,6 +86,8 @@ Name these as absences. A partner can act on an absence; they cannot act on sile
 
 ```
 [news-reviewer]
+Search scope:  <queries run, languages used, source classes NOT reachable — e.g. Chinese registry
+               platforms, paywalled academic indexes. This feeds the memo's limitations section>
 Timeline:      <dated list of public events, newest first, with source>
 Funding:       <reported amounts and dates — versus what the company claims>
 Validation:    <competitions, awards, academic output>
@@ -105,4 +107,9 @@ Under 250 words, plus the timeline. Every line needs a source.
   republished on a wire service is not third-party validation.
 - **Do not treat absence of news as proof of failure** — many good seed companies are quiet. Treat it as
   a question to ask, and say so in those terms.
+- **Scope every "none found" to the search performed.** "None found" means "none found via these
+  queries, in these languages, in these source classes" — it never means "none exists". Where a
+  source class could not be queried (registry-backed disclosure platforms, paywalled databases),
+  name it in Search scope. A funding round recorded only on Tianyancha is invisible to general web
+  search; do not let the memo read that invisibility as evidence the round does not exist.
 - **Never present a discrepancy as misconduct.** Present it as a number to reconcile.
