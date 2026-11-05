@@ -1,0 +1,4 @@
+# Optional dependencies for listed-comparable financials.
+# If not installed, the comps-scout falls back to web search silently.
+yfinance>=0.2.0
+akshare>=1.10.0
